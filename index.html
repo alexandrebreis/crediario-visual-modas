@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pré-Cadastro de Crediário - Visual Modas</title>
+  <title>PrÃ©-Cadastro de CrediÃ¡rio - Visual Modas</title>
   <style>
     :root {
       --primary-orange: #FF4500;
@@ -123,7 +123,7 @@
   <div class="container">
     <div class="header">
       <h1>Visual Modas</h1>
-      <p>Pré-Cadastro de Crediário</p>
+      <p>PrÃ©-Cadastro de CrediÃ¡rio</p>
     </div>
 
     <form id="crediarioForm">
@@ -136,7 +136,7 @@
         <div class="form-group">
           <label for="cpf">CPF</label>
           <input type="text" id="cpf" maxlength="14" required placeholder="000.000.000-00">
-          <span class="error-msg" id="cpfError">CPF inválido</span>
+          <span class="error-msg" id="cpfError">CPF invÃ¡lido</span>
         </div>
         <div class="form-group">
           <label for="nascimento">Data de Nasc.</label>
@@ -147,29 +147,29 @@
       <div class="form-group">
         <label for="cep">CEP</label>
         <input type="text" id="cep" maxlength="9" required placeholder="00000-000">
-        <span class="error-msg" id="cepError">CEP não encontrado</span>
+        <span class="error-msg" id="cepError">CEP nÃ£o encontrado</span>
       </div>
 
       <div class="form-group">
         <label for="logradouro">Rua / Logradouro</label>
-        <input type="text" id="logradouro" readonly placeholder="Preenchimento automático">
+        <input type="text" id="logradouro" readonly placeholder="Preenchimento automÃ¡tico">
       </div>
 
       <div class="row">
         <div class="form-group">
-          <label for="numero">Número</label>
-          <input type="text" id="numero" required placeholder="Nº">
+          <label for="numero">NÃºmero</label>
+          <input type="text" id="numero" required placeholder="NÂº">
         </div>
         <div class="form-group">
           <label for="bairro">Bairro</label>
-          <input type="text" id="bairro" readonly placeholder="Automático">
+          <input type="text" id="bairro" readonly placeholder="AutomÃ¡tico">
         </div>
       </div>
 
       <div class="row">
         <div class="form-group">
           <label for="cidade">Cidade</label>
-          <input type="text" id="cidade" readonly placeholder="Automático">
+          <input type="text" id="cidade" readonly placeholder="AutomÃ¡tico">
         </div>
         <div class="form-group" style="max-width: 80px;">
           <label for="uf">UF</label>
@@ -182,7 +182,7 @@
   </div>
 
   <script>
-    const whatsappLoja = "5571981673690"; // INSIRA O NÚMERO DO WHATSAPP AQUI (Com DDD)
+    const whatsappLoja = "5571981673690"; // INSIRA O NÃšMERO DO WHATSAPP AQUI (Com DDD)
 
     // Mascaras e Formatadores
     document.getElementById('cpf').addEventListener('input', function (e) {
@@ -199,7 +199,7 @@
       e.target.value = v;
     });
 
-    // Validação Real de CPF
+    // ValidaÃ§Ã£o Real de CPF
     function validarCPF(cpf) {
       cpf = cpf.replace(/[^\d]+/g, '');
       if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -247,7 +247,7 @@
       document.getElementById('uf').value = '';
     }
 
-    // Envio do formulário
+    // Envio do formulÃ¡rio
     document.getElementById('crediarioForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -269,11 +269,11 @@
       const cidade = document.getElementById('cidade').value;
       const uf = document.getElementById('uf').value;
 
-      const texto = `*NOVO PRÉ-CADASTRO DE CREDIARIO - VISUAL MODAS*\n\n` +
+      const texto = `*NOVO PRÃ‰-CADASTRO DE CREDIARIO - VISUAL MODAS*\n\n` +
                     `*Nome:* ${nome}\n` +
                     `*CPF:* ${cpfVal}\n` +
                     `*Data Nasc.:* ${nascimento}\n\n` +
-                    `*Endereço:* ${rua}, Nº ${num}\n` +
+                    `*EndereÃ§o:* ${rua}, NÂº ${num}\n` +
                     `*Bairro:* ${bairro}\n` +
                     `*Cidade:* ${cidade}/${uf}\n` +
                     `*CEP:* ${cep}`;
