@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pré-Cadastro de Crediário - Visual Modas</title>
+  <style>
+    :root {
+      --primary-orange: #FF4500;
+      --secondary-orange: #FF6B35;
+      --bg-color: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --text-color: #2D3748;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid var(--primary-orange);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .header h1 {
+      color: var(--primary-orange);
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #718096;
+      margin-top: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #CBD5E0;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary-orange);
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    .error-msg {
+      color: #E53E3E;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--primary-orange);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: var(--secondary-orange);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Visual Modas</h1>
+      <p>Pré-Cadastro de Crediário</p>
+    </div>
+
+    <form id="crediarioForm">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" required placeholder="Digite seu nome completo">
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" maxlength="14" required placeholder="000.000.000-00">
+          <span class="error-msg" id="cpfError">CPF inválido</span>
+        </div>
+        <div class="form-group">
+          <label for="nascimento">Data de Nasc.</label>
+          <input type="date" id="nascimento" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cep">CEP</label>
+        <input type="text" id="cep" maxlength="9" required placeholder="00000-000">
+        <span class="error-msg" id="cepError">CEP não encontrado</span>
+      </div>
+
+      <div class="form-group">
+        <label for="logradouro">Rua / Logradouro</label>
+        <input type="text" id="logradouro" readonly placeholder="Preenchimento automático">
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="numero">Número</label>
+          <input type="text" id="numero" required placeholder="Nº">
+        </div>
+        <div class="form-group">
+          <label for="bairro">Bairro</label>
+          <input type="text" id="bairro" readonly placeholder="Automático">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label for="cidade">Cidade</label>
+          <input type="text" id="cidade" readonly placeholder="Automático">
+        </div>
+        <div class="form-group" style="max-width: 80px;">
+          <label for="uf">UF</label>
+          <input type="text" id="uf" readonly placeholder="-">
+        </div>
+      </div>
+
+      <button type="submit">Enviar Cadastro pelo WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    const whatsappLoja = "5571981673690"; // INSIRA O NÚMERO DO WHATSAPP AQUI (Com DDD)
+
+    // Mascaras e Formatadores
+    document.getElementById('cpf').addEventListener('input', function (e) {
+      let v = e.target.value.replace(/\D/g, '');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d)/, '$1.$2');
+      v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+      e.target.value = v;
+    });
+
+    document.getElementById('cep').addEventListener('input', function (e) {
+      let v = e.target.value.replace(/\D/g, '');
+      v = v.replace(/^(\d{5})(\d)/, '$1-$2');
+      e.target.value = v;
+    });
+
+    // Validação Real de CPF
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/[^\d]+/g, '');
+      if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+      let soma = 0, resto;
+      for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+      resto = (soma * 10) % 11;
+      if (resto === 10 || resto === 11) resto = 0;
+      if (resto !== parseInt(cpf.substring(9, 10))) return false;
+      soma = 0;
+      for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+      resto = (soma * 10) % 11;
+      if (resto === 10 || resto === 11) resto = 0;
+      return resto === parseInt(cpf.substring(10, 11));
+    }
+
+    // Autopreenchimento por ViaCEP
+    document.getElementById('cep').addEventListener('blur', function () {
+      const cep = this.value.replace(/\D/g, '');
+      const errorSpan = document.getElementById('cepError');
+
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.erro) {
+              errorSpan.style.display = 'block';
+              limparEndereco();
+            } else {
+              errorSpan.style.display = 'none';
+              document.getElementById('logradouro').value = data.logradouro;
+              document.getElementById('bairro').value = data.bairro;
+              document.getElementById('cidade').value = data.localidade;
+              document.getElementById('uf').value = data.uf;
+              document.getElementById('numero').focus();
+            }
+          })
+          .catch(() => errorSpan.style.display = 'block');
+      }
+    });
+
+    function limparEndereco() {
+      document.getElementById('logradouro').value = '';
+      document.getElementById('bairro').value = '';
+      document.getElementById('cidade').value = '';
+      document.getElementById('uf').value = '';
+    }
+
+    // Envio do formulário
+    document.getElementById('crediarioForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const cpfVal = document.getElementById('cpf').value;
+      const cpfError = document.getElementById('cpfError');
+
+      if (!validarCPF(cpfVal)) {
+        cpfError.style.display = 'block';
+        return;
+      }
+      cpfError.style.display = 'none';
+
+      const nome = document.getElementById('nome').value;
+      const nascimento = document.getElementById('nascimento').value.split('-').reverse().join('/');
+      const cep = document.getElementById('cep').value;
+      const rua = document.getElementById('logradouro').value;
+      const num = document.getElementById('numero').value;
+      const bairro = document.getElementById('bairro').value;
+      const cidade = document.getElementById('cidade').value;
+      const uf = document.getElementById('uf').value;
+
+      const texto = `*NOVO PRÉ-CADASTRO DE CREDIARIO - VISUAL MODAS*\n\n` +
+                    `*Nome:* ${nome}\n` +
+                    `*CPF:* ${cpfVal}\n` +
+                    `*Data Nasc.:* ${nascimento}\n\n` +
+                    `*Endereço:* ${rua}, Nº ${num}\n` +
+                    `*Bairro:* ${bairro}\n` +
+                    `*Cidade:* ${cidade}/${uf}\n` +
+                    `*CEP:* ${cep}`;
+
+      const link = `https://api.whatsapp.com/send?phone=${whatsappLoja}&text=${encodeURIComponent(texto)}`;
+      window.open(link, '_blank');
+    });
+  </script>
+</body>
+</html>
