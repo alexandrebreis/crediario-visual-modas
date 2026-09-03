@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pré-Cadastro de Crediário - Visual Modas</title>
+  <title>Pré-Cadastro - Visual Modas</title>
   <style>
     :root {
       --primary-orange: #FF4500;
       --secondary-orange: #FF6B35;
-      --bg-color: #F8F9FA;
+      --bg-color: #F0F2F5;
       --card-bg: #FFFFFF;
       --text-color: #2D3748;
+      --instagram-color: #E1306C;
+      --whatsapp-group-color: #25D366;
     }
 
     * {
@@ -31,31 +33,30 @@
     }
 
     .container {
-      background-color: var(--card-bg);
       width: 100%;
       max-width: 500px;
+      margin: 20px auto;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: -3px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo-container img {
+      max-width: 180px;
+      height: auto;
+      display: inline-block;
+    }
+
+    .form-card {
+      background-color: var(--card-bg);
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-      border-top: 6px solid var(--primary-orange);
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .header h1 {
-      color: var(--primary-orange);
-      font-size: 24px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .header p {
-      font-size: 14px;
-      color: #718096;
-      margin-top: 4px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      border-top: 8px solid var(--primary-orange);
     }
 
     .form-group {
@@ -67,25 +68,34 @@
       font-size: 14px;
       font-weight: 600;
       margin-bottom: 6px;
+      color: #4A5568;
     }
 
     input {
       width: 100%;
       padding: 12px;
-      border: 1px solid #CBD5E0;
-      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
       font-size: 15px;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
+      background-color: #FFFFFF;
     }
 
     input:focus {
       outline: none;
       border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+    }
+
+    input[readonly] {
+      background-color: #F7FAFC;
+      color: #718096;
+      cursor: not-allowed;
     }
 
     .row {
       display: flex;
-      gap: 12px;
+      gap: 15px;
     }
 
     .row .form-group {
@@ -99,92 +109,185 @@
       display: none;
     }
 
-    button {
+    .btn-submit {
       width: 100%;
       background-color: var(--primary-orange);
       color: white;
       border: none;
-      padding: 14px;
+      padding: 16px;
       font-size: 16px;
       font-weight: bold;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.2s;
       margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    button:hover {
+    .btn-submit:hover {
       background-color: var(--secondary-orange);
+    }
+
+    /* Divisor social */
+    .social-divider {
+      margin: 25px 0 15px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .social-divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #E2E8F0;
+      z-index: 1;
+    }
+
+    .social-divider span {
+      background-color: var(--card-bg);
+      padding: 0 10px;
+      position: relative;
+      z-index: 2;
+      font-size: 13px;
+      color: #718096;
+      font-weight: 600;
+    }
+
+    /* Botões Sociais */
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-social:hover {
+      opacity: 0.9;
+    }
+
+    .btn-instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    .btn-group {
+      background-color: var(--whatsapp-group-color);
+    }
+
+    @media (max-width: 480px) {
+      .row {
+        flex-direction: column;
+        gap: 0;
+      }
+      .logo-container img {
+        max-width: 140px;
+      }
+      .form-card {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="header">
-      <h1>Visual Modas</h1>
-      <p>Pré-Cadastro de Crediário</p>
+    <div class="logo-container">
+      <img src="logo.png" alt="Visual Modas - Logo">
     </div>
 
-    <form id="crediarioForm">
-      <div class="form-group">
-        <label for="nome">Nome Completo</label>
-        <input type="text" id="nome" required placeholder="Digite seu nome completo">
-      </div>
-
-      <div class="row">
+    <div class="form-card">
+      <form id="crediarioForm">
         <div class="form-group">
-          <label for="cpf">CPF</label>
-          <input type="text" id="cpf" maxlength="14" required placeholder="000.000.000-00">
-          <span class="error-msg" id="cpfError">CPF inválido</span>
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" required placeholder="Digite seu nome completo">
         </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" maxlength="14" required placeholder="000.000.000-00">
+            <span class="error-msg" id="cpfError">CPF inválido</span>
+          </div>
+          <div class="form-group">
+            <label for="nascimento">Data de Nasc.</label>
+            <input type="date" id="nascimento" required>
+          </div>
+        </div>
+
         <div class="form-group">
-          <label for="nascimento">Data de Nasc.</label>
-          <input type="date" id="nascimento" required>
+          <label for="cep">CEP</label>
+          <input type="text" id="cep" maxlength="9" required placeholder="00000-000">
+          <span class="error-msg" id="cepError">CEP não encontrado</span>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="cep">CEP</label>
-        <input type="text" id="cep" maxlength="9" required placeholder="00000-000">
-        <span class="error-msg" id="cepError">CEP não encontrado</span>
-      </div>
-
-      <div class="form-group">
-        <label for="logradouro">Rua / Logradouro</label>
-        <input type="text" id="logradouro" readonly placeholder="Preenchimento automático">
-      </div>
-
-      <div class="row">
         <div class="form-group">
-          <label for="numero">Número</label>
-          <input type="text" id="numero" required placeholder="Nº">
+          <label for="logradouro">Rua / Logradouro</label>
+          <input type="text" id="logradouro" readonly placeholder="Preenchimento automático">
         </div>
-        <div class="form-group">
-          <label for="bairro">Bairro</label>
-          <input type="text" id="bairro" readonly placeholder="Automático">
+
+        <div class="row">
+          <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" required placeholder="Nº">
+          </div>
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input type="text" id="bairro" readonly placeholder="Automático">
+          </div>
         </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" readonly placeholder="Automático">
+          </div>
+          <div class="form-group" style="max-width: 80px;">
+            <label for="uf">UF</label>
+            <input type="text" id="uf" readonly placeholder="-">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar Cadastro pelo WhatsApp</button>
+      </form>
+
+      <!-- Seção de Atalhos e Links -->
+      <div class="social-divider">
+        <span>SIGA E ACOMPANHE A VISUAL MODAS</span>
       </div>
 
-      <div class="row">
-        <div class="form-group">
-          <label for="cidade">Cidade</label>
-          <input type="text" id="cidade" readonly placeholder="Automático">
-        </div>
-        <div class="form-group" style="max-width: 80px;">
-          <label for="uf">UF</label>
-          <input type="text" id="uf" readonly placeholder="-">
-        </div>
-      </div>
+      <div class="social-links">
+        <!-- Cole o link do perfil do Instagram no href -->
+        <a href="https://www.instagram.com/visualmodascamacari?igsi=Nm9hbXp4eGw3cnFo" target="_blank" class="btn-social btn-instagram">
+          Siga nosso Instagram
+        </a>
 
-      <button type="submit">Enviar Cadastro pelo WhatsApp</button>
-    </form>
+        <!-- Cole o link do grupo de promoções do WhatsApp no href -->
+        <a href="https://chat.whatsapp.com/HGX6XL6aZyY2FeVzOiAZmh?s=cl&p=a&mlu=0&ilr=0" target="_blank" class="btn-social btn-group">
+          Grupo de Promoções e Compras
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
-    const whatsappLoja = "5571981673690"; // INSIRA O NÚMERO DO WHATSAPP AQUI (Com DDD)
+    // Configurar o WhatsApp da loja para onde vão os dados do pré-cadastro
+    const whatsappLoja = "5500000000000"; 
 
-    // Mascaras e Formatadores
     document.getElementById('cpf').addEventListener('input', function (e) {
       let v = e.target.value.replace(/\D/g, '');
       v = v.replace(/(\d{3})(\d)/, '$1.$2');
@@ -199,7 +302,6 @@
       e.target.value = v;
     });
 
-    // Validação Real de CPF
     function validarCPF(cpf) {
       cpf = cpf.replace(/[^\d]+/g, '');
       if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -215,7 +317,6 @@
       return resto === parseInt(cpf.substring(10, 11));
     }
 
-    // Autopreenchimento por ViaCEP
     document.getElementById('cep').addEventListener('blur', function () {
       const cep = this.value.replace(/\D/g, '');
       const errorSpan = document.getElementById('cepError');
@@ -236,7 +337,10 @@
               document.getElementById('numero').focus();
             }
           })
-          .catch(() => errorSpan.style.display = 'block');
+          .catch(() => {
+            errorSpan.innerText = "Erro ao conectar com ViaCEP";
+            errorSpan.style.display = 'block';
+          });
       }
     });
 
@@ -247,7 +351,6 @@
       document.getElementById('uf').value = '';
     }
 
-    // Envio do formulário
     document.getElementById('crediarioForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -256,6 +359,7 @@
 
       if (!validarCPF(cpfVal)) {
         cpfError.style.display = 'block';
+        document.getElementById('cpf').focus();
         return;
       }
       cpfError.style.display = 'none';
@@ -269,11 +373,16 @@
       const cidade = document.getElementById('cidade').value;
       const uf = document.getElementById('uf').value;
 
-      const texto = `*NOVO PRÉ-CADASTRO DE CREDIARIO - VISUAL MODAS*\n\n` +
+      const texto = `🛍️ *NOVO PRÉ-CADASTRO DE CREDIÁRIO*\n` +
+                    `🏢 *Loja:* Visual Modas\n\n` +
+                    `👤 *DADOS DO CLIENTE*\n` +
+                    `-----------------------------\n` +
                     `*Nome:* ${nome}\n` +
                     `*CPF:* ${cpfVal}\n` +
                     `*Data Nasc.:* ${nascimento}\n\n` +
-                    `*Endereço:* ${rua}, Nº ${num}\n` +
+                    `📍 *ENDEREÇO*\n` +
+                    `-----------------------------\n` +
+                    `*Rua:* ${rua}, Nº ${num}\n` +
                     `*Bairro:* ${bairro}\n` +
                     `*Cidade:* ${cidade}/${uf}\n` +
                     `*CEP:* ${cep}`;
